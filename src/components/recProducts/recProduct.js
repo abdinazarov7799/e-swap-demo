@@ -1,7 +1,6 @@
 import {Card, CardBody, CardSubtitle, CardTitle} from "reactstrap";
 import { Badge} from 'antd';
 import './recProducts.css';
-import Car from '../../assets/images/products/lc200.png';
 
 function Product(props) {
     return(
@@ -12,16 +11,22 @@ function Product(props) {
                     position: "relative",
                     border: "none"
                 }}
+                key={props.key}
             >
                 <span id="card-type">
-                    {props.type}
+                    {props.category}
                 </span>
-                <img
-                    alt="Product Img"
-                    src={Car}
-                />
+                <div style={{
+                    backgroundImage: `url(${props.img})`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center center",
+                    height: "180px",
+                    borderRadius: "10px"
+                }}>
+                </div>
                 <CardBody className="px-0">
-                    <Badge.Ribbon text="~65,000 AED" style={{
+                    <Badge.Ribbon text={"~" + Number(props.cost).toLocaleString("en-US") + " AED"} style={{
                         background: "#FF7001",
                         color: "#ffffff",
                         right: "0px",
@@ -35,13 +40,13 @@ function Product(props) {
                         className="mb-2"
                         tag="h6"
                     >
-                        Lexus GX
+                        {props.name}
                     </CardSubtitle>
                     <CardSubtitle
                         className="mb-2 text-muted"
                         tag="h6"
                     >
-                        Year: 2014 • KM: 200,450
+                        {props.description}
                     </CardSubtitle>
                 </CardBody>
             </Card>

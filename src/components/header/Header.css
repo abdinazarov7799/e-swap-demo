@@ -21,7 +21,7 @@ a{
     transition: .3s;
 }
 a:hover{
-    color: #434757;
+    color: #eaeaea;
 }
 .right-menu{
     display: flex;
@@ -54,7 +54,6 @@ a:hover{
     border: none;
 }
 #header-input input{
-    width: 425px;
     padding: 9px 12px;
 }
 #header-input input:focus{

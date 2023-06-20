@@ -14,34 +14,34 @@ function Categories() {
     return(
         <>
             <Container>
-                <Row className="mt-4 mb-3">
-                    <Col>
+                <Row className="mt-3">
+                    <Col className="my-2">
                         <Cart title={"Motors"} img={motors}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Real Estate"} img={RealEstate}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Electronics"} img={Electronics}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Spare Parts"} img={SpareParts}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Ready business and equipment"} img={business}/>
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Hobbyand rest"} img={hobby}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Furnitures for home"} img={furniture}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Clothes, shoes, accessories"} img={clothes}/>
                     </Col>
-                    <Col>
+                    <Col className="my-2">
                         <Cart title={"Animals"} img={animals}/>
                     </Col>
                 </Row>

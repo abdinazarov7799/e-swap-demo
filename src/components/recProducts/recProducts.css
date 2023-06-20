@@ -5,7 +5,7 @@
     position: absolute;
     top: 8px;
     left: 8px;
-    width: 43px;
+    padding: 0 7px;
     height: 22px;
     background: #6A6F70;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);

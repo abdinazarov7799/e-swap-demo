@@ -1,8 +1,10 @@
 import './Header.css';
 import {Col, Container, Row} from "reactstrap";
-import {Button, Dropdown, Menu, Space} from "antd";
+import { Dropdown, Menu, Space} from "antd";
 import {DownOutlined, HeartOutlined, PushpinOutlined} from "@ant-design/icons";
 import LogoDefoult from "../../assets/logos/logo@3000px.svg";
+import React, {useEffect, useState} from "react";
+
 
 const items = [
     {
@@ -24,6 +26,14 @@ const items = [
 ];
 
 function Header() {
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        // Fetch categories
+        fetch('http://tes.mediasolutions.uz/api.php?action=categories')
+            .then(response => response.json())
+            .then(data => setCategories(data));
+
+    }, []);
     return (
         <>
             <section id="navbar">
@@ -70,28 +80,27 @@ function Header() {
             </section>
             <section id="header">
                 <Container>
-                    <Row className="justify-content-between align-items-center">
-                        <Col md={2} className="me-4">
+                    <Row className="align-items-center justify-content-between">
+                        <Col>
                             <img src={LogoDefoult} alt="logo" style={{width: "177px", height: "50px"}}/>
                         </Col>
-                        <Col md={7} className="row">
-                            <Col md={3}>
-                                <Dropdown overlay={
-                                    <Menu>
-                                        <Menu.Item key="1">Category 1</Menu.Item>
-                                        <Menu.Item key="2">Category 2</Menu.Item>
-                                        <Menu.Item key="3">Category 3</Menu.Item>
-                                    </Menu>
-                                }
-                                          placement="top">
-                                    <button className="btn" id="selectBtn">
-                                        <Space>
-                                            Select category
-                                            <DownOutlined/>
-                                        </Space>
-                                    </button>
-                                </Dropdown>
-                            </Col>
+                        <Col >
+                            <Dropdown overlay={
+                                <Menu>
+                                    {categories.map(item => {
+                                        return (<Menu.Item key={item.id}>{item.category}</Menu.Item>)
+                                    })}
+                                </Menu>
+                            }>
+                                <button className="btn float-start" id="selectBtn">
+                                    <Space>
+                                        Select category
+                                        <DownOutlined/>
+                                    </Space>
+                                </button>
+                            </Dropdown>
+                        </Col>
+                        <Col lg={6} className="row">
                             <Col>
                                 <div className="input-group" id="header-input">
                                     <input type="text" className="form-control"
@@ -100,7 +109,7 @@ function Header() {
                                 </div>
                             </Col>
                         </Col>
-                        <Col md={3} className="d-flex align-items-center justify-content-end align-content-center">
+                        <Col lg={2} sm={3} className="d-flex justify-content-between align-content-center">
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -113,10 +122,9 @@ function Header() {
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                marginLeft: "49px"
                             }}>
                                 <PushpinOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
-                                <p style={{fontSize: "14px", margin: 0}}>Select Region</p>
+                                <p style={{fontSize: "14px", margin: 0, width: "87px"}}>Select Region</p>
                             </div>
                         </Col>
                     </Row>

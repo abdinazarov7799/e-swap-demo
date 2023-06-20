@@ -1,48 +1,31 @@
-import {AppstoreOutlined, MailOutlined} from "@ant-design/icons";
-import React, {useState} from "react";
-import {Button, Menu} from "antd";
+import React, {useEffect, useState} from "react";
+import {Menu} from "antd";
 import {Col, Container, Row} from "reactstrap";
 import "./HeroMenu.css";
 import Product from "../recProducts/recProduct";
-import img1 from '../../assets/images/products/lc200.png';
+
 
 function HeroMenu() {
-    const products = [
-        {
-            type: 'Cars',
-            img: {img1},
-            cost: '~65,000 AED',
-            name: 'Lexus GX',
-            description: 'Year: 2014 • KM: 200,450'
-        },
-        {
-            type: 'Cars',
-            img: {img1},
-            cost: '~65,000 AED',
-            name: 'Lexus GX',
-            description: 'Year: 2014 • KM: 200,450'
-        },
-        {
-            type: 'Cars',
-            img: {img1},
-            cost: '~65,000 AED',
-            name: 'Lexus GX',
-            description: 'Year: 2014 • KM: 200,450'
-        },
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        // Fetch items
+        fetch('http://tes.mediasolutions.uz/api.php?action=items')
+            .then(response => response.json())
+            .then(data => setProducts(data));
 
-        {
-            type: 'Cars',
-            img: {img1},
-            cost: '~65,000 AED',
-            name: 'Lexus GX',
-            description: 'Year: 2014 • KM: 200,450'
-        }
-    ];
+        // Fetch categories
+        fetch('http://tes.mediasolutions.uz/api.php?action=categories')
+            .then(response => response.json())
+            .then(data => setCategories(data));
+
+    }, []);
+
     const items = [
         {
             label: 'Recommendations',
             key: 'recommendations',
-            count: 98
+            count: 98,
         },
         {
             label: 'Newest',
@@ -52,13 +35,14 @@ function HeroMenu() {
         {
             label: 'Nearby',
             key: 'nearby',
-            count: 75
+            count: 56
         },
     ];
-    const [current, setCurrent] = useState('mail');
+    const [current, setCurrent] = useState('recommendations');
     return(
         <>
             <Container className="mt-4">
+
                 <Menu onClick={(e) => {
                     setCurrent(e.key);
                 }} selectedKeys={[current]} mode="horizontal">
@@ -70,15 +54,22 @@ function HeroMenu() {
                     ))}
                 </Menu>
                 <section className="mt-4 mb-2">
-                    <Row className="flex-wrap justify-content-between">
-                        {products.map((products) => (
-                            <Col>
+                    <Row className="flex-wrap">
+                        {products.map((product) => (
+
+                            <Col md={3}>
                                 <Product
-                                    type={products.type}
-                                    img={products.img}
-                                    cost={products.cost}
-                                    name={products.name}
-                                    description={products.description}
+                                    category_id={product.category_id}
+                                    key={product.id}
+                                    category={categories.map((cat) => {
+                                        if (product.category_id === cat.id){
+                                            return  cat.category
+                                        }
+                                    })}
+                                    img={product.image}
+                                    cost={product.cost}
+                                    name={product.name}
+                                    description={product.description}
                                 />
                             </Col>
                         ))}
@@ -88,4 +79,5 @@ function HeroMenu() {
         </>
     );
 }
+
 export default HeroMenu;
