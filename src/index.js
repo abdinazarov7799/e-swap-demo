@@ -5,12 +5,13 @@ import './index.css';
 import Header from './components/header/Header';
 import Banner from "./components/banner/Banner";
 import Categories from "./components/categories/Categories";
-import Menu from "./components/hero-menu/HeroMenu";
 import HeroMenu from "./components/hero-menu/HeroMenu";
+import NavbarMenu from "./components/header/Navbar/Navbar";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <NavbarMenu />
     <Header />
     <Banner />
     <Categories />

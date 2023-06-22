@@ -14,3 +14,6 @@
     font-size: 14px;
     color: #ffffff;
 }
+.ant-image-mask{
+    border-radius: 10px!important;
+}

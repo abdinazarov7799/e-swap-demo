@@ -1,8 +1,10 @@
 import {Card, CardBody, CardSubtitle, CardTitle} from "reactstrap";
-import { Badge} from 'antd';
+import {Badge, Image} from 'antd';
 import './recProducts.css';
+import {useState} from "react";
 
 function Product(props) {
+    const [visible, setVisible] = useState(false);
     return(
         <>
             <Card
@@ -17,13 +19,33 @@ function Product(props) {
                     {props.category}
                 </span>
                 <div style={{
-                    backgroundImage: `url(${props.img})`,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center center",
                     height: "180px",
                     borderRadius: "10px"
                 }}>
+                <Image
+                    preview={{
+                        visible: false,
+                    }}
+                    height={180}
+                    src={props.img}
+                    onClick={() => setVisible(true)}
+                    style={{ borderRadius: "10px"}}
+                />
+                <div
+                    style={{
+                        display: 'none',
+                    }}
+                >
+                    <Image.PreviewGroup
+                        preview={{
+                            visible,
+                            onVisibleChange: (vis) => setVisible(vis),
+                        }}
+                    >
+                        <Image src={props.img} />
+                        <Image src="https://telegra.ph/file/9f0904ef295ca1f62b0f9.png" />
+                    </Image.PreviewGroup>
+                </div>
                 </div>
                 <CardBody className="px-0">
                     <Badge.Ribbon text={"~" + Number(props.cost).toLocaleString("en-US") + " AED"} style={{

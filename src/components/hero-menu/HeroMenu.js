@@ -3,22 +3,16 @@ import {Menu} from "antd";
 import {Col, Container, Row} from "reactstrap";
 import "./HeroMenu.css";
 import Product from "../recProducts/recProduct";
+import getCategories from "../fetchData/getCategories";
+import getItems from "../fetchData/getItems";
 
 
 function HeroMenu() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        // Fetch items
-        fetch('http://tes.mediasolutions.uz/api.php?action=items')
-            .then(response => response.json())
-            .then(data => setProducts(data));
-
-        // Fetch categories
-        fetch('http://tes.mediasolutions.uz/api.php?action=categories')
-            .then(response => response.json())
-            .then(data => setCategories(data));
-
+        getItems().then(data => setProducts(data));
+        getCategories().then(data => setCategories(data));
     }, []);
 
     const items = [
@@ -56,8 +50,7 @@ function HeroMenu() {
                 <section className="mt-4 mb-2">
                     <Row className="flex-wrap">
                         {products.map((product) => (
-
-                            <Col md={3}>
+                            <Col xs={12} sm={6} md={4} lg={3}>
                                 <Product
                                     category_id={product.category_id}
                                     key={product.id}

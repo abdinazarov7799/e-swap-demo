@@ -1,90 +1,46 @@
 import './Header.css';
 import {Col, Container, Row} from "reactstrap";
-import { Dropdown, Menu, Space} from "antd";
+import {Dropdown, Menu, Space} from "antd";
 import {DownOutlined, HeartOutlined, PushpinOutlined} from "@ant-design/icons";
 import LogoDefoult from "../../assets/logos/logo@3000px.svg";
 import React, {useEffect, useState} from "react";
+import getCategories from "../fetchData/getCategories";
 
-
-const items = [
-    {
-        label: (
-            <a href="#">
-                1st menu item
-            </a>
-        ),
-        key: '0',
-    },
-    {
-        label: (
-            <a href="#">
-                2nd menu item
-            </a>
-        ),
-        key: '1',
-    },
-];
 
 function Header() {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        // Fetch categories
-        fetch('http://tes.mediasolutions.uz/api.php?action=categories')
-            .then(response => response.json())
-            .then(data => setCategories(data));
-
+        getCategories().then(data => setCategories(data));
     }, []);
     return (
         <>
-            <section id="navbar">
-                <Container>
-                    <Row style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                        <Col md={6}>
-                            <ul>
-                                <li>
-                                    <a href="#">Vacancies</a>
-                                </li>
-                                <li>
-                                    <a href="#">Help</a>
-                                </li>
-                                <li>
-                                    <Dropdown
-                                        menu={{
-                                            items,
-                                        }}
-                                        placement="topLeft"
-                                    >
-                                        <a href="#">
-                                            <Space style={{cursor: "pointer"}}>
-                                                Catalogue
-                                                <DownOutlined />
-                                            </Space>
-                                        </a>
-                                    </Dropdown>
-                                </li>
-                                <li>
-                                    <a href="#">About us</a>
-                                </li>
-                            </ul>
-                        </Col>
-                        <Col md={6}>
-                            <div className="right-menu">
-                                <a href="#">Sign Up or Sign in</a>
-                                <button>
-                                    Place Your Ad
-                                </button>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
             <section id="header">
                 <Container>
                     <Row className="align-items-center justify-content-between">
-                        <Col>
+                        <Col xs={6} md={6} lg={2} className="me-md-4">
                             <img src={LogoDefoult} alt="logo" style={{width: "177px", height: "50px"}}/>
                         </Col>
-                        <Col >
+                        <Col xs={6} md={3} className="d-flex justify-content-end align-content-center d-lg-none">
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                marginRight: "10px"
+                            }}>
+                                <HeartOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
+                                <p style={{fontSize: "14px", margin: 0}}>Favorites</p>
+                            </div>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                marginLeft: "5px"
+                            }}>
+                                <PushpinOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
+                                <p style={{fontSize: "14px", margin: 0, width: "87px"}}>Select Region</p>
+                            </div>
+                        </Col>
+                        <Col sm={4} md={3} lg={2} className="">
                             <Dropdown overlay={
                                 <Menu>
                                     {categories.map(item => {
@@ -100,16 +56,15 @@ function Header() {
                                 </button>
                             </Dropdown>
                         </Col>
-                        <Col lg={6} className="row">
-                            <Col>
-                                <div className="input-group" id="header-input">
-                                    <input type="text" className="form-control"
-                                           placeholder="Enter search text here (e.g. Chevrolet Camaro SS)"/>
-                                    <button className="btn input-group-append">Search</button>
-                                </div>
-                            </Col>
+                        <Col sm={8} md={9} lg={5} xl={6} className="row input-col pe-sm-3">
+                            <div className="input-group mt-lg-0 pe-sm-2" id="header-input">
+                                <input type="text" className="form-control"
+                                       placeholder="Enter search text here (e.g. Chevrolet Camaro SS)"/>
+                                <button className="btn input-group-append">Search</button>
+                            </div>
                         </Col>
-                        <Col lg={2} sm={3} className="d-flex justify-content-between align-content-center">
+                        <Col lg={2} id="icons"
+                             className="d-flex justify-content-between align-content-center d-sm-none d-lg-flex">
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -122,6 +77,7 @@ function Header() {
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
+                                marginLeft: "5px"
                             }}>
                                 <PushpinOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
                                 <p style={{fontSize: "14px", margin: 0, width: "87px"}}>Select Region</p>
